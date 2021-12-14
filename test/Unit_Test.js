@@ -1,16 +1,37 @@
-const Birdcontract = artifacts.require("Birdcontract");
+const Birdcontract = artifacts.require("AngryBirds");
+const Testcontract = artifacts.require("Test");
 const assert = require("chai").assert;
-const truffleAssert = require('truffle-assertions');
+const truffleAssert = require("truffle-assertions");
+
+
+contract("Testcontract", (accounts) => {
+  var instance;
+  
+  beforeEach(async () => {instance = await Testcontract.new("AngryBirdsontheBlock", "ABBX")});
+
+  describe("getAllBirdsOfOwner()", () =>{
+    it("should return all birds owned by an address", async () => {
+      await instance.createTestBird(101, accounts[0]);
+      await instance.createTestBird(202, accounts[0]);
+      await instance.createTestBird(303, accounts[1]);
+      await instance.createTestBird(404, accounts[0]);
+      await instance.createTestBird(505, accounts[1]);
+      var testAllBirdsOfOwner = await instance.getAllBirdsOfOwner(accounts[1]);
+      assert.equal(testAllBirdsOfOwner[0].toNumber(), 2, "Data is incorrect");
+      assert.equal(testAllBirdsOfOwner[1], 4, "Data is incorrect");
+    });
+  });
+})
 
 contract("Birdcontract", (accounts) => {
   var instance;
 
-  beforeEach(async () => {instance = await Birdcontract.new("AngryBirdontheBlock", "ABBX")});
+  beforeEach(async () => {instance = await Birdcontract.new("AngryBirdsontheBlock", "ABBX")});
 
   describe("name()", () =>{
-    it("should return the name of the native token 'AngryBirdontheBlock'", async () => {
+    it("should return the name of the native token 'AngryBirdsontheBlock'", async () => {
       var testName = await instance.name();
-      assert.equal(testName, "AngryBirdontheBlock", "Token wasn't constructed correctly");
+      assert.equal(testName, "AngryBirdsontheBlock", "Token wasn't constructed correctly");
     });
   });
 

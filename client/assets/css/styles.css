@@ -1,0 +1,137 @@
+@font-face {
+    font-family: "Poppins";
+    src: url("/client/assets/fonts/Poppins-Light.ttf");
+}
+
+/* HTML Elements */
+body {
+	background: lightblue;
+    font-family: Poppins;
+    font-weight: 500;
+    letter-spacing: 1px; 
+}
+
+footer {
+    background: whitesmoke;
+    height: 30px;
+    left: 20em;
+    padding: 4vh;
+    padding-bottom: 60px;
+    position: relative;
+    width: 68%;
+    border-radius: 5px;
+}
+
+h1 {
+    color: rgb(48, 46, 46);
+}
+
+html {
+    box-sizing: border-box;
+    color: rgb(48, 46, 46);overflow-y: scroll;
+}
+
+p {
+    color: rgb(48, 46, 46);
+}
+
+/* Classes */
+.birdAttributes {
+    background-color: #ededed;
+    border-radius: 10px;
+    left: 2.5em;
+    padding: 25px;
+}
+
+.birdBox {
+    background-color: #e2efff;
+    border-radius: 10px;
+    left: 0.6em;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    z-index: 20;
+}
+
+.card-deck{
+    background: transparent;
+    left: -8%;
+    position: relative;
+    top: -15em;
+    width: 120%;
+    z-index: 1;
+}
+
+.catalogBox {
+    background-color: #e2efff;
+    border-radius: 10px;
+    height: 30em;
+    left: 0.6em;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    z-index: 20;
+}
+
+.card-img-top {
+    height: 200px;
+}
+
+.card-text {
+    color: black;
+}
+
+.dnaDiv {
+    bottom: 5px;
+    font-size: 18px;
+    left:20px;
+    position: absolute;
+}
+
+.navbar {
+    border-radius: 5px;
+}
+
+/* IDs */
+#backgroundPicture {
+    opacity: 80%;
+    width: 100%;
+    z-index: -10;
+    position: relative;
+}
+
+#blockchainButton {
+    border-radius: 5%;
+    left: 26.1em;
+}
+
+#cardButton {
+    left: 2em;
+    position: relative;
+}
+
+#cardTitle {
+    text-align: center;
+}
+
+#defaultButton {
+    border-radius: 5%;
+    left: 4.6em;
+}
+
+#logo {
+    border-radius: 40%;
+}
+
+#randomizeButton {
+    border-radius: 5%;
+    left: 0.8em;
+}
+
+#topCard {
+    left: 35%;
+    position: relative;
+    display: inline-block;
+    background: transparent;
+    z-index: 1;
+}
