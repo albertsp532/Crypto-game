@@ -51,11 +51,11 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
         _symbol = symbol;
     }
 
-    function breed(uint256 _dadId, uint256 _mumId) public returns (uint256){
+    function breed(uint256 _dadId, uint256 _mumId) external returns (uint256){
         require(birdOwner[_dadId] == msg.sender && birdOwner[_mumId] == msg.sender, "You can't breed what you don't own");
         
-        (uint256 _dadDna,,,, uint256 _dadGeneration) = getBird(_dadId);//discarding not needed data here
-        (uint256 _mumDna,,,, uint256 _mumGeneration) = getBird(_mumId);//discarding not needed data here
+        (uint256 _dadDna,,,, uint256 _dadGeneration) = getBird(_dadId);//discarding redundant data here
+        (uint256 _mumDna,,,, uint256 _mumGeneration) = getBird(_mumId);//discarding redundant data here
         uint256 _newDna = _mixDna(_dadDna, _mumDna);
         uint256 _newGeneration;
 
@@ -237,10 +237,8 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
 
     function _mixDna(uint256 _dadDna, uint256 _mumDna) internal view returns (uint256){
         uint256[9] memory geneArray;
-        uint8 random = uint8(now % 255); //pseudorandom, real randomness doesn't exist in solidity and is not needed. This will return a number 0-255. e.g. 10111000
+        uint8 random = uint8(now % 255); //pseudorandom, real randomness doesn't exist in solidity and is redundant. This will return a number 0-255. e.g. 10111000
         uint8 randomSeventeenthDigit = uint8(now % 1);
-        uint8 randomPair = uint8(now % 7); //w9d3 assignment. number to select random pair.
-        uint8 randomNumberForRandomPair = uint8((now % 89) + 10);//value of random pair, making sure there's no leading '0'.
         uint256 i;
         uint256 counter = 7;             // start on the right end
 
@@ -262,8 +260,6 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
         } else {
             geneArray[8] = _dadDna; //this takes the 17th gene from dad.
         }
-
-        geneArray[randomPair] = randomNumberForRandomPair; //extra randomness for random pair.
 
         uint256 newGene = 0;
 
