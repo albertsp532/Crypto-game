@@ -1,11 +1,11 @@
+pragma solidity ^0.5.12;
+
 import "./Ownable.sol";
 import "./Destroyable.sol";
 import "./IERC165.sol";
 import "./IERC721.sol";
 import "./IERC721Receiver.sol"; //the EVM needs to know what functions/properties every variable has... same goes if that variable is a contract. an interface is a way of abstracting those capabilities so the EVM knows what it does.
 import "./SafeMath.sol";
-
-pragma solidity ^0.5.12;
 
 contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
 
@@ -44,11 +44,11 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
     event Birth(address owner, uint256 birdId, uint256 mumId, uint256 dadId, uint256 genes);
-    event Testmix(uint256 newGenes);
 
     constructor(string memory name, string memory symbol) public {
         _name = name;
         _symbol = symbol;
+        _createBird(0, 0, 0, uint256(-1), address(0));//Bird 0 doesn't do anything, but it exists in the mappings and arrays to avoid issues in the market place
     }
 
     function breed(uint256 _dadId, uint256 _mumId) external returns (uint256){
@@ -213,7 +213,7 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
     }
 
     function _isOwnerOrApproved(address _from, address _to, uint256 _tokenId) internal view returns (bool) {
-        require(_from == msg.sender || approvalOneBird[_tokenId] == msg.sender || _operatorApprovals[_from][_to], "You are not authorized to use this function");
+        require(_from == msg.sender || approvalOneBird[_tokenId] == msg.sender || _operatorApprovals[_from][msg.sender], "You are not authorized to use this function");
         require(birdOwner[_tokenId] == _from, "Owner incorrect");
         require(_to != address(0), "Error: Operation would delete this token permanently");
         require(_tokenId < birdies.length, "Token doesn't exist");
@@ -239,6 +239,8 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
         uint256[9] memory geneArray;
         uint8 random = uint8(now % 255); //pseudorandom, real randomness doesn't exist in solidity and is redundant. This will return a number 0-255. e.g. 10111000
         uint8 randomSeventeenthDigit = uint8(now % 1);
+        uint8 randomPair = uint8(now % 7); //w9d3 assignment. number to select random pair.
+        uint8 randomNumberForRandomPair = uint8((now % 89) + 10);//value of random pair, making sure there's no leading '0'.
         uint256 i;
         uint256 counter = 7;             // start on the right end
 
@@ -260,6 +262,8 @@ contract AngryBirds is Ownable, Destroyable, IERC165, IERC721 {
         } else {
             geneArray[8] = _dadDna; //this takes the 17th gene from dad.
         }
+
+        geneArray[randomPair] = randomNumberForRandomPair; //extra randomness for random pair.
 
         uint256 newGene = 0;
 

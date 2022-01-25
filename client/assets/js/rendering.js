@@ -1,10 +1,5 @@
 var colors = Object.values(allColors());
 
-function appendBird(dna, id) {
-    birdBox(id);
-    renderBird(`#BirdBox${id}`, birdDna(dna), id);
-}
-
 function birdDna(dna) {
     var dnaObject = {
         "topFeatherColor": dna.genes.substring(0, 2),
@@ -24,75 +19,6 @@ function birdDna(dna) {
     return dnaObject;
 }
 
-function birdBox(id) {
-    var boxDiv =    `<div style="transform:scale(0.7)" id="BirdBox` + id + `" class="col-lg-3 catalogBox m-2 light-b-shadow">
-                        <div class="angryBird_Red">
-                            <div class="tail">
-                                <div class="tail_top"></div>
-                                <div class="tail_middle"></div>
-                                <div class="tail_bottom"></div>
-                            </div>
-                            <div class="feather">
-                                <div class="feather_top"></div>
-                                <div class="feather_bottom"></div>
-                            </div>
-                            <div class="bird_body">
-                                <div class="bird_body bird_body_inner"></div>
-                                <div class="deco_1"></div>
-                                <div class="deco_2"></div>
-                                <div class="deco_3"></div>
-                                <div class="deco_4"></div>
-                            </div>
-                            <div class="belly"></div>
-                            <div class="face">
-                                <div class="eye eye_right">
-                                    <div class="eyebrow"></div>
-                                    <div class="pupil"></div>
-                                </div>
-                                <div class="eye eye_left">
-                                    <div class="eyebrow"></div>
-                                    <div class="pupil"></div>
-                                </div>
-                                <div class="beak">
-                                    <div class="beak_upper"></div>
-                                    <div class="beak_lower"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <br>
-                        <div class="dnaDiv">
-                            <b>
-                                ID:
-                                <span>` + id + `</span><br>
-                                GEN:
-                                <span id="generation` + id + `"></span><br>
-                                MUM:
-                                <span id="mum` + id + `"></span><br>
-                                DAD:
-                                <span id="dad` + id + `"></span><br>
-                                DNA:
-                                        <span id="dnaTopFeather` + id + `"></span>
-                                        <span id="dnaBodyFeather` + id + `"></span>
-                                        <span id="dnaTopBeak` + id + `"></span>
-                                        <span id="dnaBottomBeak` + id + `"></span>
-                                        <span id="dnaEyesShape` + id + `"></span>
-                                        <span id="dnaDecorationPattern` + id + `"></span>
-                                        <span id="dnaDecorationAtEye` + id + `"></span>
-                                        <span id="dnaDecorationMid` + id + `"></span>
-                                        <span id="dnaDecorationSmall` + id + `"></span>
-                                        <span id="dnaAnimation` + id + `"></span><br>
-                                    <ul class="ml-4">
-                                        <li><span id="bottomeyetext` + id + `"></span></li>
-                                        <li><span id="bottomdecorationpatterntext` + id + `"></span></li>
-                                        <li><span id="bottomanimationtext` + id + `"></span></li>
-                                    </ul>
-                            </b>
-                        </div>
-                    </div>`
-    $('.row').append(boxDiv);
-}
-
 function renderBird(boxId, dna, id){
     topFeatherColor(boxId, colors[dna.topFeatherColor], dna.topFeatherColor, id);
     bodyFeatherColor(boxId, colors[dna.bodyFeatherColor],dna.bodyFeatherColor, id);
@@ -110,9 +36,9 @@ function renderBird(boxId, dna, id){
 }
 
 function topFeatherColor(boxId, color, code, id) {
-$(`${boxId} .feather_top`).css('background', '#' + color)//This changes the color of the bird
-$(`${boxId} .feather_bottom`).css('background', '#' + color)//This changes the color of the bird
-$('#dnaTopFeather' + id).html(code)//This updates the DNA line that is displayed below the bird
+    $(`${boxId} .feather_top`).css('background', '#' + color)//This changes the color of the bird
+    $(`${boxId} .feather_bottom`).css('background', '#' + color)//This changes the color of the bird
+    $('#dnaTopFeather' + id).html(code)//This updates the DNA line that is displayed below the bird
 }
 
 function bodyFeatherColor(boxId, color, code, id) {
@@ -179,67 +105,67 @@ function eyesVariation(boxId, num, id) {
 }
 
 function basicEyes(boxId) {
-    $(`${boxId} .eye`).css('border-top', 'none');
-    $(`${boxId} .eye`).css('border-bottom', 'none');
-    $(`${boxId} .eye`).css('border-left', 'none');
-    $(`${boxId} .eye`).css('border-right', 'none');
-    $(`${boxId} .eye`).css('border', '0.9em black solid');
-    $(`${boxId} .eye_right .eyebrow`).css('left', '-1em');
-    $(`${boxId} .eye_left .eyebrow`).css('left', '-3em');
-    $(`${boxId} .eye .eyebrow`).css('top', '-3em');
-    $(`${boxId} .pupil`).css('top', '3em');
-    $(`${boxId} .eye_right .pupil`).css('left', '1.5em','top', '3em');
-    $(`${boxId} .eye_left .pupil`).css('left', '5em','top', '3em');
+    $(`${boxId} .eye`).css({'border-top': 'none', 'border-bottom': 'none', 'border-left': 'none', 'border-right': 'none', 'border': '0.9em black solid'});
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-1.5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-1.5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '1.5em', 'top': '3em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '5em', 'top': '3em'});
 }
 
 function eyesType1(boxId) {//Chilled
     $(`${boxId} .eye`).css('border-top', '4em solid');
-    $(`${boxId} .eye .eyebrow`).css('top', '-5em');
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-4.5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-4.5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '1.5em', 'top': '1em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '5em', 'top': '1em'});
 }
 
 function eyesType2(boxId) {//Up
     $(`${boxId} .eye`).css('border-bottom', '4em solid');
-    $(`${boxId} .eye .eyebrow`).css('top', '-4em');
-    $(`${boxId} .pupil`).css('top', '1em');
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-2em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-2em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '1.5em', 'top': '2em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '5em', 'top': '2em'});
 }
 
 function eyesType3(boxId) {//Right
     $(`${boxId} .eye`).css('border-left', '2.5em solid');
-    $(`${boxId} .eye_right .pupil`).css('left', '4em');
-    $(`${boxId} .eye_left .pupil`).css('left', '4em');
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-1.5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-1.5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '5em', 'top': '3em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '5em', 'top': '3em'});
 }
 
 function eyesType4(boxId) {//Left
     $(`${boxId} .eye`).css('border-right', '2.5em solid');
-    $(`${boxId} .pupil`).css('left', '-1.2em');
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-1.5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-1.5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '0em', 'top': '3em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '0em', 'top': '3em'});
 }
 
 function eyesType5(boxId) {//Dazzled
-    $(`${boxId} .eye`).css('border-top', '4em solid');
-    $(`${boxId} .eye`).css('border-bottom', '4em solid');
-    $(`${boxId} .pupil`).css('top', '0em');
-    $(`${boxId} .eye .eyebrow`).css('top', '-5em');
+    $(`${boxId} .eye`).css({'border-top': '4em solid', 'border-bottom': '4em solid'});
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-1em', 'top': '-5.5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-3em', 'top': '-5.5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '3em', 'top': '0em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '3em', 'top': '0em'});
 }
 
 function eyesType6(boxId) {//Slit
-    $(`${boxId} .eye`).css('border-top', '4em solid');
-    $(`${boxId} .eye`).css('border-left', '4em solid');
-    $(`${boxId} .eye`).css('border-right', '4em solid');
-    $(`${boxId} .eye_right .pupil`).css('left', '0em','top', '-2em');
-    $(`${boxId} .eye_left .pupil`).css('left', '0em','top', '-2em');
-    $(`${boxId} .eye_right .eyebrow`).css('left', '-3em');
-    $(`${boxId} .eye_left .eyebrow`).css('left', '-5em');
-    $(`${boxId} .eye .eyebrow`).css('top', '-6em');
+    $(`${boxId} .eye`).css({'border-top': '4em solid', 'border-left': '4em solid', 'border-right': '4em solid'});
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-4em', 'top': '-5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-6em', 'top': '-5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '-0.1em', 'top': '1em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '-0.1em', 'top': '1em'});
 }
 
 function eyesType7(boxId) {//Mask
     $(`${boxId} .eye`).css('border', '3em solid');
-    $(`${boxId} .pupil`).css('top', '1em');
-    $(`${boxId} .eye_right .pupil`).css('left', '1em');
-    $(`${boxId} .eye_left .pupil`).css('left', '1em');
-    $(`${boxId} .eye_right .eyebrow`).css('left', '-3em');
-    $(`${boxId} .eye_left .eyebrow`).css('left', '-5em');
-    $(`${boxId} .eye .eyebrow`).css('top', '-6em');
+    $(`${boxId} .eye_right .eyebrow`).css({'left': '-3em', 'top': '-5em'});
+    $(`${boxId} .eye_left .eyebrow`).css({'left': '-5em', 'top': '-5em'});
+    $(`${boxId} .eye_right .pupil`).css({'left': '1em', 'top': '1em'});
+    $(`${boxId} .eye_left .pupil`).css({'left': '1em', 'top': '1em'});
 }
 
 function decorationVariation(boxId, num, id) {
@@ -291,14 +217,10 @@ function decorationVariation(boxId, num, id) {
 }
 
 function resetDecoration(boxId) {
-    $(`${boxId} .deco_1`).css('display', 'initial');
-    $(`${boxId} .deco_2`).css('display', 'initial');
-    $(`${boxId} .deco_3`).css('display', 'initial');
-    $(`${boxId} .deco_4`).css('display', 'initial');
-    $(`${boxId} .deco_1`).css('transform', 'rotate(-25deg) scaleY(1) translateX(0em) translateY(0em)');
-    $(`${boxId} .deco_2`).css('transform', 'rotate(-15deg) scaleY(1) translateX(0em) translateY(0em)');
-    $(`${boxId} .deco_3`).css('transform', 'rotate(-10deg) scaleY(1) translateY(0em)');
-    $(`${boxId} .deco_4`).css('transform', 'rotate(-10deg) scaleY(1) translateY(0em)');
+    $(`${boxId} .deco_1`).css({'display': 'initial', 'transform': 'rotate(-25deg) scaleY(1) translateX(0em) translateY(0em)'});
+    $(`${boxId} .deco_2`).css({'display': 'initial', 'transform': 'rotate(-15deg) scaleY(1) translateX(0em) translateY(0em)'});
+    $(`${boxId} .deco_3`).css({'display': 'initial', 'transform': 'rotate(-10deg) scaleY(1) translateY(0em)'});
+    $(`${boxId} .deco_4`).css({'display': 'initial', 'transform': 'rotate(-10deg) scaleY(1) translateY(0em)'});
 }
 
 function decorationType1(boxId) {//Large
