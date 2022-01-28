@@ -1,13 +1,22 @@
+var arrayOfIds;
+var arrayOnSale;
+var arrayToDisplay;
+
 $(document).ready( async () => {//when page is loaded, get latest instance of blockchain
     await connectWallet();
+    await accessStudio();
     await initializeMarketplace();//allow Marketplace contract to handle offers.
-    var arrayOfIdsOfOwner = await getBirdsOfOwner();
-    var arrayOfIdsOnSale = await getBirdsOnSale();
-    if (arrayOfIdsOfOwner > 0) {
-        var arrayOfIdsToDisplayInCatalog = arrayOfIdsOfOwner.filter(x => !arrayOfIdsOnSale.includes(x));//all birds of this user not on sale
+    arrayOfIds
+ = await getBirdsOfOwner();
+    arrayOnSale = await getBirdsOnSale();
+    if (arrayOnSale == "") {
+        arrayToDisplay = arrayOfIds
+    ;
+    } else {
+        arrayToDisplay = arrayOfIds
+    .filter(x => !arrayOnSale.includes(x));//all birds of this user not on sale
     }
-    await buildCatalog(arrayOfIdsToDisplayInCatalog);
-    activateClickListener();//must be activated after all buttons are rendered.
+    await buildCatalog(arrayToDisplay);
 })
 
 function appendBirdToCatalog(dna, id) {
@@ -17,7 +26,7 @@ function appendBirdToCatalog(dna, id) {
 
 function catalogBox(id) {
     var boxDiv =    `<div id="BirdBox` + id + `" class="col-lg-3 catalogBox m-2 light-b-shadow">
-                        <div class="angryBird_Red">
+                        <div class="bird">
                             <div class="tail">
                                 <div class="tail_top"></div>
                                 <div class="tail_middle"></div>
@@ -99,14 +108,40 @@ function catalogBox(id) {
 }
 
 //Listener for offer buttons
-function activateClickListener() {
+function activateCatalogEventListeners() {
+    $(`[id^='birdPrice']`).keypress(async function(e) {
+        if ( e.which == 13 ) {//both enter buttons have '13'.
+            var id = $(this).attr("id").substring(9);//extract id from HTML.
+            var price = $(this).val();//get price of the bird with the same id as the button
+            if (isNaN(price)) {
+                alert("Please enter a number!")
+            } else if (price <= 0) {
+                alert("Please enter a positive number!")
+            } else{
+                await sellBird(price, id);
+                $('.row').empty();//clear catalog content
+                arrayOnSale = await getBirdsOnSale();
+                arrayToDisplay = arrayOfIds
+            .filter(x => !arrayOnSale.includes(x));//all birds of this user not on sale
+                await buildCatalog(arrayToDisplay);//repopulate catalog with remaining birds
+            }
+        }
+    })
+
     $(`[id^='offerButton']`).on("click", async function() {
         var id = $(this).attr("id").substring(11);//extract id from HTML.
         var price = $(`#birdPrice${id}`).val();//get price of the bird with the same id as the button
-        await sellBird(price, id);
-        $('.row').empty();//clear catalog content
-        arrayOfIdsOnSale = await getBirdsOnSale();
-        arrayOfIdsToDisplayInCatalog = arrayOfIdsOfOwner.filter(x => !arrayOfIdsOnSale.includes(x));//all birds of this user not on sale
-        await buildCatalog(arrayOfIdsToDisplayInCatalog);//repopulate catalog with remaining birds
+        if (isNaN(price)) {
+            alert("Please enter a number!")
+        } else if (price <= 0) {
+            alert("Please enter a positive number!")
+        } else{
+            await sellBird(price, id);
+            $('.row').empty();//clear catalog content
+            arrayOnSale = await getBirdsOnSale();
+            arrayToDisplay = arrayOfIds
+        .filter(x => !arrayOnSale.includes(x));//all birds of this user not on sale
+            await buildCatalog(arrayToDisplay);//repopulate catalog with remaining birds
+        }
     })
 }

@@ -1,12 +1,12 @@
 pragma solidity ^0.5.12;
 
-import "./AngryBirds.sol";
+import "./CryptoBirdies.sol";
 
-contract Test is AngryBirds {
+contract Test is CryptoBirdies {
 
-    constructor(string memory name, string memory symbol) AngryBirds(name, symbol) public{}
+    constructor(string memory name, string memory symbol) CryptoBirdies(name, symbol) public{}
 
-     function createTestBird(uint256 genes, address owner) public returns (uint256) {
+    function createTestBird(uint256 genes, address owner) public returns (uint256) {
         return _createBird(0, 0, 0, genes, owner);
     }
 }

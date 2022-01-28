@@ -1,8 +1,8 @@
 var colors = Object.values(allColors());
 
 const defaultDNA = {
-    "topFeatherColor": 57,
-    "bodyFeatherColor": 57,
+    "topFeatherColor": 23,
+    "bodyFeatherColor": 54,
     "topBeakColor": 83,
     "bottomBeakColor": 73,
     "eyesShape": 0,
@@ -15,6 +15,7 @@ const defaultDNA = {
 
 $(document).ready( async () => {//when page is loaded, get latest instance of blockchain
     await connectWallet();
+    await accessStudio();
     $('.colorscreen').show();
     $('.attributes').hide();
     setDefaultDna();
@@ -92,13 +93,13 @@ function setRandomDna(){
 $('#colorsButton').click(()=>{
     $('.colorscreen').show();
     $('.attributes').hide();
-    $('.angryBird_Red').css('top', '15em');
+    $('.bird').css('top', '15em');
 });
 
 $('#attributesButton').click(()=>{
     $('.colorscreen').hide();
     $('.attributes').show();
-    $('.angryBird_Red').css('top', '25em');
+    $('.bird').css('top', '25em');
 });
 
 $('#topfeatherscolor').change(()=>{
@@ -480,15 +481,15 @@ function resetAnimation() {
 }
 
 function animationType1() {
-    $('.angryBird_Red').addClass('slowRotateBird');
+    $('.bird').addClass('slowRotateBird');
 }
 
 function animationType2() {
-    $('.angryBird_Red').addClass('floatingBird');
+    $('.bird').addClass('floatingBird');
 }
 
 function animationType3() {
-    $('.angryBird_Red').addClass('compressingBird');
+    $('.bird').addClass('compressingBird');
 }
 
 function animationType4() {
@@ -508,7 +509,7 @@ function animationType6() {
 }
 
 function animationType7() {
-    $('.angryBird_Red').addClass('floatingBird');
+    $('.bird').addClass('floatingBird');
     $('.beak_upper').addClass('upperSpeakingBird');
     $('.beak_lower').addClass('lowerSpeakingBird');
     $('.tail_top').addClass('topWaggingTail');
